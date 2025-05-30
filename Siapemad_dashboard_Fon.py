@@ -83,7 +83,7 @@ def encabezado():
             vertical_padding = (max_height - new_height) // 2
             img_with_padding = ImageOps.expand(img, border=(0, vertical_padding, 0, vertical_padding), fill=(0, 0, 0, 0))
             
-            col.image(img_with_padding, use_column_width=True)
+            col.image(img_with_padding, use_container_width=True)
         except FileNotFoundError:
             st.error(f"No se encontró la imagen en la ruta: {img_path}")
         except Exception as e:
