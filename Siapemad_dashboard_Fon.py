@@ -357,8 +357,6 @@ def mostrar_actividad(df_actividad):
 def main():
     # if login():
     # Aquí colocas el código principal de tu aplicación después del inicio de sesión exitoso
-    st.title("¡Bienvenido a la plataforma!")
-    st.write("Tu contenido principal va aquí.")
     encabezado()
 
     df_consumo = cargar_datos("consumo", excel_files_consumo)

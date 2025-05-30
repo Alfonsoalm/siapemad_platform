@@ -26,8 +26,8 @@ excel_files_actividad = {
 
 # Lista de rutas de las imágenes
 image_paths = [
-    'C:/Users/34688/Documents/CARPETAS DE TRABAJO DE JAVI/python_ws/Siapemad_Dashboard/logo_1.png',
-    'C:/Users/34688/Documents/CARPETAS DE TRABAJO DE JAVI/python_ws/Siapemad_Dashboard/logo_2.png',
-    'C:/Users/34688/Documents/CARPETAS DE TRABAJO DE JAVI/python_ws/Siapemad_Dashboard/logo_3.png',
-    'C:/Users/34688/Documents/CARPETAS DE TRABAJO DE JAVI/python_ws/Siapemad_Dashboard/logo_4.png'
+    './Logo_2.png',
+    './Logo_1.png',
+    './Logo_4.png',
+    './Logo_3.png',
 ]
