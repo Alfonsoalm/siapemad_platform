@@ -32,11 +32,9 @@ def login():
     st.title("Inicio de sesión")
     st.write("Por favor, introduce tu nombre de usuario y contraseña.")
 
-    # Entradas de texto para usuario y contraseña
     username = st.text_input("Usuario")
     password = st.text_input("Contraseña", type="password")
 
-    # Botón para iniciar sesión
     if st.button("Iniciar sesión"):
         if username in usuarios:
             if usuarios[username] == password:
@@ -49,8 +47,6 @@ def login():
     
     return False
 
-
-# Inicialización del estado de la sesión
 if "data_actividad" not in st.session_state:
     st.session_state.data_actividad = None
 if "data_consumo" not in st.session_state:
@@ -58,12 +54,11 @@ if "data_consumo" not in st.session_state:
 
 def encabezado():
     """Muestra el encabezado y las imágenes en la página principal."""
-    uniform_width = 300  # Anchura uniforme deseada
+    uniform_width = 300 
 
-    # Calcular la altura máxima de las imágenes redimensionadas
     heights = []
     for img_path in image_paths:
-        img = Image.open(img_path).convert("RGBA")  # Asegurarse de que la imagen tenga un canal alfa
+        img = Image.open(img_path).convert("RGBA") 
         width_percent = (uniform_width / float(img.size[0]))
         new_height = int((float(img.size[1]) * float(width_percent)))
         heights.append(new_height)
@@ -74,12 +69,10 @@ def encabezado():
     columns = st.columns(len(image_paths))
     for col, img_path, height in zip(columns, image_paths, heights):
         try:
-            img = Image.open(img_path).convert("RGBA")  # Asegurarse de que la imagen tenga un canal alfa
+            img = Image.open(img_path).convert("RGBA")
             width_percent = (uniform_width / float(img.size[0]))
             new_height = int((float(img.size[1]) * float(width_percent)))
             img = img.resize((uniform_width, new_height))
-            
-            # Añadir márgenes verticales con transparencia
             vertical_padding = (max_height - new_height) // 2
             img_with_padding = ImageOps.expand(img, border=(0, vertical_padding, 0, vertical_padding), fill=(0, 0, 0, 0))
             
@@ -92,16 +85,20 @@ def encabezado():
     st.markdown("<h1 style='text-align: center;'>SIAPEMAD</h1>", unsafe_allow_html=True)
     st.markdown("## :electric_plug: Tabla de consumo energético [W]")
 
+
 def cargar_datos_excel(file_path, sheet_name='Sheet1'):
-    """Carga datos desde un archivo Excel."""
+    """Carga datos desde un archivo Excel y los ordena por fecha descendente."""
     try:
-        df = pd.read_excel(io=file_path, engine='openpyxl', sheet_name=sheet_name, usecols=None, nrows=5000)
+        df = pd.read_excel(io=file_path, engine='openpyxl', sheet_name=sheet_name, usecols=None)
+        df['fecha'] = pd.to_datetime(df['fecha'])
+        df = df.sort_values(by='fecha', ascending=False).reset_index(drop=True)
         return df
     except FileNotFoundError:
         st.error(f"No se encontró el archivo en la ruta: {file_path}")
     except Exception as e:
         st.error(f"Error al cargar los datos desde {file_path}\n{e}")
         return None
+
 
 def cargar_datos(tipo_dataset, excel_files):
     """Carga los datos seleccionados y los almacena en el estado de la sesión."""
@@ -126,6 +123,7 @@ def cargar_datos(tipo_dataset, excel_files):
 
     return st.session_state.data_actividad if tipo_dataset == "actividad" else st.session_state.data_consumo
 
+
 def filtrar_datos_consumo(df):
     """Filtra los datos de consumo según el rango de fechas y horas seleccionado."""
     columnas_totales = [
@@ -144,10 +142,8 @@ def filtrar_datos_consumo(df):
     min_fecha = df_unique['fecha'].min().date()
     max_fecha = df_unique['fecha'].max().date()
 
-    # Mensajes de depuración para verificar las fechas
     print(f"min_fecha: {min_fecha}, max_fecha: {max_fecha}")
 
-    # Actualizar session_state con las fechas mínimas y máximas del archivo Excel
     st.session_state["fecha_inicio"] = min_fecha
     st.session_state["hora_inicio"] = pd.Timestamp("00:00:00").time()
     st.session_state["fecha_fin"] = max_fecha

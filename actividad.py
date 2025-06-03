@@ -34,8 +34,8 @@ class Actividad():
     def __actividad__(self):
         
         #Pivota el dataset con la fecha y hora como index agrupando por dias y los sensores como columnas
-        self.df['event-time'] = pd.to_datetime(self.df['event-time'])
-        self.df=self.df.pivot_table(index=self.df['event-time'].dt.date, columns='event-id', aggfunc='size', fill_value=0)
+        self.df['fecha'] = pd.to_datetime(self.df['fecha'])
+        self.df=self.df.pivot_table(index=self.df['fecha'].dt.date, columns='event-id', aggfunc='size', fill_value=0)
         self.df.index= pd.to_datetime(self.df.index)
 
         #Suma para cada dia el numero de veces que se activa cada sensor para obtener la actividad total por dia
