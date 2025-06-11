@@ -23,7 +23,7 @@ TITLEX_SIZE = 21
 TITLEY_SIZE = 21
 
 # Configuración inicial de la página
-st.set_page_config(page_title="Métricas de SIAPEMAD",
+st.set_page_config(page_title="SIAPEMAD",
                    page_icon=":bar_chart:",
                    layout="wide")
 
